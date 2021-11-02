@@ -21,7 +21,7 @@ const Banner = () => {
   return (
     <Container style={bannerBg} sx={{ flexGrow: 1, mt: 3 }}>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={5} style={verticalAlign}>
+        <Grid item xs={12} sm={5} md={6} style={verticalAlign}>
           <Box>
             <Typography variant="h3" sx={{ my: 2 }}>
               Your New Smile <br /> Starts Here
@@ -44,7 +44,7 @@ const Banner = () => {
             </Button>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={7} style={verticalAlign}>
+        <Grid item xs={12} sm={7} md={6} style={verticalAlign}>
           <img style={{ width: 550 }} src={chair} alt="" />
         </Grid>
       </Grid>
