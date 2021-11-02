@@ -44,7 +44,7 @@ const bookings = [
 const AvailableAppointment = ({ date }) => {
   return (
     <Container>
-      <h2 style={{ textAlign: "center" }}>
+      <h2 style={{ textAlign: "center", color: "#14D1CA" }}>
         Available Appointments On {date.toDateString()}
       </h2>
       <Grid container spacing={2}>
