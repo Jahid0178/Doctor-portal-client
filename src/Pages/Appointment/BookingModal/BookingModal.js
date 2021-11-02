@@ -19,7 +19,7 @@ const style = {
 
 const BookingModal = ({ openBooking, handleBookingClose, booking, date }) => {
   const { name, time } = booking;
-  const handleBookSubmit = (e) => {
+  const handleBookingSubmit = (e) => {
     alert("Booking Submitted");
     handleBookingClose();
     e.preventDefault();
@@ -68,7 +68,11 @@ const BookingModal = ({ openBooking, handleBookingClose, booking, date }) => {
             defaultValue={date.toDateString()}
             size="small"
           />
-          <Button onClick={handleBookSubmit} variant="contained" type="submit">
+          <Button
+            onClick={handleBookingSubmit}
+            variant="contained"
+            type="submit"
+          >
             Send
           </Button>
         </form>
