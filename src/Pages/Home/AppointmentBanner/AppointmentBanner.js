@@ -20,7 +20,7 @@ const AppointmentBanner = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <img
-            style={{ width: 500, marginTop: "-110px" }}
+            style={{ width: 500, marginTop: "-135px" }}
             src={doctor}
             alt=""
           />
