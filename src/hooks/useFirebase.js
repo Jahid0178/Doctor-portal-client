@@ -5,6 +5,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+  updateProfile,
   signOut,
 } from "firebase/auth";
 
@@ -17,11 +20,21 @@ const useFirebase = () => {
   const [error, setError] = useState("");
   const auth = getAuth();
 
-  const registerUser = (email, password) => {
+  const googleProvider = new GoogleAuthProvider();
+
+  const registerUser = (email, password, name, history) => {
     setIsLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setError("");
+        const newUser = { email, displayName: name };
+        setUser(newUser);
+        updateProfile(auth.currentUser, {
+          displayName: name,
+        })
+          .then(() => {})
+          .catch((error) => {});
+        history.replace("/");
       })
       .catch((error) => {
         setError(error.message);
@@ -57,6 +70,18 @@ const useFirebase = () => {
       .finally(() => setIsLoading(false));
   };
 
+  const signInWithGoogle = (location, history) => {
+    setIsLoading(true);
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        setUser(result.user);
+      })
+      .catch((error) => {
+        setError(error.message);
+      })
+      .finally(() => setIsLoading(false));
+  };
+
   // observe user state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -72,6 +97,7 @@ const useFirebase = () => {
 
   return {
     user,
+    signInWithGoogle,
     registerUser,
     loginUser,
     logOut,
