@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,18 +15,24 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Calendar from "../../Shared/Calendar/Calendar";
-import Appointments from "../../Appointment/Appointments/Appointments";
-import { Link } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch,
+} from "react-router-dom";
 import { Button } from "@mui/material";
+import DashboardHome from "../DashboardHome/DashboardHome";
+import MakeAdmin from "../MakeAdmin/MakeAdmin";
+import AddDoctor from "../AddDoctor/AddDoctor";
 
 const drawerWidth = 240;
 
 const Dashboard = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [date, setDate] = useState(new Date());
+  let { path, url } = useRouteMatch();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -43,6 +49,33 @@ const Dashboard = (props) => {
           sx={{ ml: 2, mt: 2 }}
         >
           Appointment
+        </Button>
+      </Link>
+      <Link to={`${url}`} style={{ textDecoration: "none" }}>
+        <Button
+          variant="contained"
+          style={{ color: "white" }}
+          sx={{ ml: 2, mt: 2 }}
+        >
+          Dashboard
+        </Button>
+      </Link>
+      <Link to={`${url}/makeAdmin`} style={{ textDecoration: "none" }}>
+        <Button
+          variant="contained"
+          style={{ color: "white" }}
+          sx={{ ml: 2, mt: 2 }}
+        >
+          Make Admin
+        </Button>
+      </Link>
+      <Link to={`${url}/addDoctor`} style={{ textDecoration: "none" }}>
+        <Button
+          variant="contained"
+          style={{ color: "white" }}
+          sx={{ ml: 2, mt: 2 }}
+        >
+          Add Doctor
         </Button>
       </Link>
       <List>
@@ -135,16 +168,17 @@ const Dashboard = (props) => {
         }}
       >
         <Toolbar />
-        <Typography paragraph>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={6} lg={4}>
-              <Calendar date={date} setDate={setDate}></Calendar>
-            </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={8}>
-              <Appointments date={date}></Appointments>
-            </Grid>
-          </Grid>
-        </Typography>
+        <Switch>
+          <Route exact path={path}>
+            <DashboardHome></DashboardHome>
+          </Route>
+          <Route path={`${path}/makeAdmin`}>
+            <MakeAdmin></MakeAdmin>
+          </Route>
+          <Route path={`${path}/addDoctor`}>
+            <AddDoctor></AddDoctor>
+          </Route>
+        </Switch>
       </Box>
     </Box>
   );

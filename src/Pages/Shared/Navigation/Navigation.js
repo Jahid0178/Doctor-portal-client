@@ -13,7 +13,7 @@ import useAuth from "../../../hooks/useAuth";
 const Navigation = () => {
   const { user, logOut } = useAuth();
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box position="sticky" sx={{ flexGrow: 1, top: 0, zIndex: 999 }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton

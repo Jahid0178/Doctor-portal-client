@@ -19,9 +19,10 @@ const useFirebase = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const auth = getAuth();
-
+  // Providers
   const googleProvider = new GoogleAuthProvider();
 
+  // Register new user
   const registerUser = (email, password, name, history) => {
     setIsLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
@@ -29,6 +30,8 @@ const useFirebase = () => {
         setError("");
         const newUser = { email, displayName: name };
         setUser(newUser);
+        // save user to the database
+        saveUser(email, name, "POST");
         updateProfile(auth.currentUser, {
           displayName: name,
         })
@@ -43,6 +46,7 @@ const useFirebase = () => {
       .finally(() => setIsLoading(false));
   };
 
+  // Log in with email & password
   const loginUser = (email, password, location, history) => {
     setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
@@ -57,6 +61,7 @@ const useFirebase = () => {
       .finally(() => setIsLoading(false));
   };
 
+  // Log out user
   const logOut = () => {
     setIsLoading(true);
     signOut(auth)
@@ -70,11 +75,27 @@ const useFirebase = () => {
       .finally(() => setIsLoading(false));
   };
 
+  const saveUser = (email, displayName, method) => {
+    const user = { email, displayName };
+    fetch("http://localhost:4000/users", {
+      method: method,
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    }).then();
+  };
+
+  // Register with google
   const signInWithGoogle = (location, history) => {
     setIsLoading(true);
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        setUser(result.user);
+        const user = result.user;
+        setUser(user);
+        saveUser(user.email, user.displayName, "PUT");
+        const destination = location?.state?.form || "/";
+        history.push(destination);
       })
       .catch((error) => {
         setError(error.message);
