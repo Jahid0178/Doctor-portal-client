@@ -26,6 +26,7 @@ import { Button } from "@mui/material";
 import DashboardHome from "../DashboardHome/DashboardHome";
 import MakeAdmin from "../MakeAdmin/MakeAdmin";
 import AddDoctor from "../AddDoctor/AddDoctor";
+import useAuth from "../../../hooks/useAuth";
 
 const drawerWidth = 240;
 
@@ -33,6 +34,7 @@ const Dashboard = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   let { path, url } = useRouteMatch();
+  const { admin } = useAuth();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -60,24 +62,28 @@ const Dashboard = (props) => {
           Dashboard
         </Button>
       </Link>
-      <Link to={`${url}/makeAdmin`} style={{ textDecoration: "none" }}>
-        <Button
-          variant="contained"
-          style={{ color: "white" }}
-          sx={{ ml: 2, mt: 2 }}
-        >
-          Make Admin
-        </Button>
-      </Link>
-      <Link to={`${url}/addDoctor`} style={{ textDecoration: "none" }}>
-        <Button
-          variant="contained"
-          style={{ color: "white" }}
-          sx={{ ml: 2, mt: 2 }}
-        >
-          Add Doctor
-        </Button>
-      </Link>
+      {admin && (
+        <Box>
+          <Link to={`${url}/makeAdmin`} style={{ textDecoration: "none" }}>
+            <Button
+              variant="contained"
+              style={{ color: "white" }}
+              sx={{ ml: 2, mt: 2 }}
+            >
+              Make Admin
+            </Button>
+          </Link>
+          <Link to={`${url}/addDoctor`} style={{ textDecoration: "none" }}>
+            <Button
+              variant="contained"
+              style={{ color: "white" }}
+              sx={{ ml: 2, mt: 2 }}
+            >
+              Add Doctor
+            </Button>
+          </Link>
+        </Box>
+      )}
       <List>
         {["Inbox", "Starred", "Send email", "Drafts", "Appointment"].map(
           (text, index) => (
