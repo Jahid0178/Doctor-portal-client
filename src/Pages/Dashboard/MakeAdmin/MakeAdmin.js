@@ -4,10 +4,12 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/system";
 import Alert from "@mui/material/Alert";
+import useAuth from "../../../hooks/useAuth";
 
 const MakeAdmin = () => {
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
+  const { token } = useAuth();
 
   const handleOnBlur = (e) => {
     setEmail(e.target.value);
@@ -18,6 +20,7 @@ const MakeAdmin = () => {
     fetch("http://localhost:4000/users/admin", {
       method: "PUT",
       headers: {
+        authorization: `Bearer ${token}`,
         "content-type": "application/json",
       },
       body: JSON.stringify(user),
