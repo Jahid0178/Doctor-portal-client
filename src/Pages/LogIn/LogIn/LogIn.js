@@ -43,7 +43,6 @@ const LogIn = () => {
           <form onSubmit={handleLoginSubmit}>
             <TextField
               sx={{ width: "75%", mb: 1 }}
-              id="standard-basic"
               label="Your Email"
               type="email"
               name="email"
@@ -52,7 +51,6 @@ const LogIn = () => {
             />
             <TextField
               sx={{ width: "75%" }}
-              id="standard-basic"
               label="Your Password"
               type="password"
               name="password"
@@ -77,7 +75,7 @@ const LogIn = () => {
             )}
             {error && <Alert severity="error">{error}</Alert>}
           </form>
-          <p>------------------------------------------------</p>
+          <p>------------------------OR------------------------</p>
           <Button onClick={handleGoogleSignIn} variant="contained">
             Google Sign In
           </Button>
