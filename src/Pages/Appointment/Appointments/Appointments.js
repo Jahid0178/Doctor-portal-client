@@ -16,7 +16,7 @@ const Appointments = ({ date }) => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => setAppointments(data));
-  }, [date]);
+  }, [date, user.email]);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: "100%" }} aria-label="Appointments table">
