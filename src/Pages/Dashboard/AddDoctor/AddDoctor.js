@@ -1,4 +1,4 @@
-import { Button, Input, TextField } from "@mui/material";
+import { Button, Input, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 
 const AddDoctor = () => {
@@ -37,7 +37,7 @@ const AddDoctor = () => {
 
   return (
     <div>
-      <h2>Add A Doctor</h2>
+      <Typography variant="h5">Add A Doctor</Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           sx={{ width: "50%", mb: 1 }}

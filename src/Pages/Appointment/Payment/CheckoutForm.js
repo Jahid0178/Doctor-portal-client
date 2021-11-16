@@ -4,7 +4,7 @@ import useAuth from "../../../hooks/useAuth";
 import { CircularProgress } from "@mui/material";
 
 const CheckoutForm = ({ appointment }) => {
-  const { price, patientName } = appointment;
+  const { price, patientName, _id } = appointment;
   const { user } = useAuth();
   const [process, setProcess] = useState(false);
   const [success, setSuccess] = useState("");
@@ -20,7 +20,7 @@ const CheckoutForm = ({ appointment }) => {
       body: JSON.stringify({ price }),
     })
       .then((res) => res.json())
-      .then((data) => setClientSecret(data));
+      .then((data) => setClientSecret(data.clientSecret));
   }, [price]);
 
   const stripe = useStripe();
@@ -71,6 +71,23 @@ const CheckoutForm = ({ appointment }) => {
       setSuccess("Your Payment Process Successfully");
       setProcess(false);
       console.log(paymentIntent);
+      // Save to database
+      const payment = {
+        amount: paymentIntent.amount,
+        created: paymentIntent.created,
+        last4: paymentMethod.card.last4,
+        transaction: paymentIntent.client_secret.slice("_secret")[0],
+      };
+      const url = `http://localhost:4000/appointments/${_id}`;
+      fetch(url, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(payment),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
     }
   };
   return (
@@ -95,7 +112,7 @@ const CheckoutForm = ({ appointment }) => {
         {process ? (
           <CircularProgress />
         ) : (
-          <button type="submit" disabled={!stripe}>
+          <button type="submit" disabled={!stripe || success}>
             Pay ${price}
           </button>
         )}

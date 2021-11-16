@@ -37,13 +37,14 @@ const Payment = () => {
 export default Payment;
 
 /*
-
 1. install stripe and stripe-react
 2. set publishable key
 3. Elements
 4. Checkout Form
 -------------------
 5. Create Payment method
-6.
-
+6. server create payment intent api
+7. load client secret
+8. confirmCard payment
+9. handle user error
 */
