@@ -9,7 +9,7 @@ const Doctor = (props) => {
         <Card sx={{ maxWidth: 345 }}>
           <CardMedia
             component="img"
-            height="140"
+            sx={{ width: "100%" }}
             image={`data: image/png; base64, ${image}`}
             alt="green iguana"
           />
